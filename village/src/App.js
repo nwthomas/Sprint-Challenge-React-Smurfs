@@ -35,6 +35,28 @@ class App extends Component {
       );
   };
 
+  deleteSmurf = id => {
+    axios
+      .delete(`http://localhost:3333/smurfs/${id}`)
+      .then(res => {
+        this.setState(
+          {
+            message: res.statusText
+          },
+          () => this.getData()
+        );
+      })
+      .catch(err => {
+        this.setState({
+          message: err.statusText
+        });
+      });
+  };
+
+  modifySmurf = id => {
+    // add content
+  };
+
   componentDidMount() {
     this.getData();
   }
@@ -81,7 +103,11 @@ class App extends Component {
           exact
           path="/"
           render={props => (
-            <Smurfs {...props} smurfs={this.state.shownSmurfs} />
+            <Smurfs
+              {...props}
+              smurfs={this.state.shownSmurfs}
+              deleteSmurf={this.deleteSmurf}
+            />
           )}
         />
         <Route
