@@ -14,7 +14,7 @@ CRUD, or "Create, Read, Update, Delete," is an application that is capable of cr
 
 - Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
-Create - The `.push()` function sends new information in `Axios` to be stored on the server.
+Create - The `.post()` function sends new information in `Axios` to be stored on the server.
 
 Read - The `.get()` function pulls existing information from the server in `Axios` to display on the page.
 
