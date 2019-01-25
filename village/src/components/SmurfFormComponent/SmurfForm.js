@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./SmurfForm.css";
 
 class SmurfForm extends Component {
   constructor(props) {
@@ -27,7 +28,10 @@ class SmurfForm extends Component {
             height: "",
             message: res.statusText
           },
-          () => this.props.getData() // Initiates call to server from App.js to update data on screen
+          () => {
+            this.props.getData(); // Initiates call to server from App.js to update data on screen
+            this.props.history.push("/"); // Routes back to home
+          }
         )
       )
       .catch(err =>
@@ -41,9 +45,17 @@ class SmurfForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  clearForm = () => {
+    this.setState({
+      name: "",
+      age: "",
+      height: ""
+    });
+  };
+
   render() {
     return (
-      <div className="SmurfForm">
+      <div className="form__container">
         <form onSubmit={this.addSmurf}>
           <input
             onChange={this.handleInputChange}
@@ -63,7 +75,14 @@ class SmurfForm extends Component {
             value={this.state.height}
             name="height"
           />
-          <button type="submit">Add to the village</button>
+          <div className="button__container">
+            <button className="btn" type="submit">
+              Add to the village
+            </button>
+            <button className="btn" type="button" onClick={this.clearForm}>
+              Clear form
+            </button>
+          </div>
         </form>
       </div>
     );

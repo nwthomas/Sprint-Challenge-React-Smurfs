@@ -17,7 +17,7 @@ const Navbar = props => {
         type="text"
         placeholder="Search..."
         value={props.searchInput}
-        onChange={props.onChange}
+        onChange={props.handleSearchChange}
       />
     </div>
   );

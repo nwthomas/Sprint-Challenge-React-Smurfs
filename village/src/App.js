@@ -12,7 +12,9 @@ class App extends Component {
     super(props);
     this.state = {
       smurfs: [],
-      message: ""
+      shownSmurfs: [],
+      message: "",
+      searchInput: ""
     };
   }
 
@@ -22,6 +24,7 @@ class App extends Component {
       .then(res =>
         this.setState({
           smurfs: res.data,
+          shownSmurfs: res.data,
           message: res.statusText
         })
       )
@@ -35,17 +38,51 @@ class App extends Component {
   componentDidMount() {
     this.getData();
   }
-  // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
-  // Notice what your map function is looping over and returning inside of Smurfs.
-  // You'll need to make sure you have the right properties on state and pass them down to props.
+
+  searchSmurfs = () => {
+    if (this.state.searchInput) {
+      const searched = this.state.shownSmurfs.filter(smurf => {
+        if (
+          JSON.stringify(smurf.name)
+            .toLowerCase()
+            .includes(this.state.searchInput.toLowerCase())
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      this.setState({
+        shownSmurfs: searched
+      });
+    } else {
+      this.setState({
+        shownSmurfs: this.state.smurfs
+      });
+    }
+  };
+
+  handleSearchChange = e => {
+    this.setState(
+      {
+        [e.target.name]: e.target.value
+      },
+      () => {
+        this.searchSmurfs();
+      }
+    );
+  };
+
   render() {
     return (
       <div className="App">
-        <NavbarContainer />
+        <NavbarContainer handleSearchChange={this.handleSearchChange} />
         <Route
           exact
           path="/"
-          render={props => <Smurfs {...props} smurfs={this.state.smurfs} />}
+          render={props => (
+            <Smurfs {...props} smurfs={this.state.shownSmurfs} />
+          )}
         />
         <Route
           path="/smurf-form"
