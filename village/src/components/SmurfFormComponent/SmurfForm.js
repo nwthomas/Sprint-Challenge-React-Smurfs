@@ -8,37 +8,84 @@ class SmurfForm extends Component {
     this.state = {
       name: "",
       age: "",
-      height: ""
+      height: "",
+      id: ""
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      id: localStorage.getItem("id")
+    });
   }
 
   addSmurf = event => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3333/smurfs", {
-        name: this.state.name,
-        age: this.state.age,
-        height: this.state.height
-      })
-      .then(res =>
-        this.setState(
-          {
-            name: "",
-            age: "",
-            height: "",
-            message: res.statusText
-          },
-          () => {
-            this.props.getData(); // Initiates call to server from App.js to update data on screen
-            this.props.history.push("/"); // Routes back to home
-          }
-        )
+    if (this.state.id) {
+      if (
+        this.state.name === "" ||
+        this.state.age === "" ||
+        this.state.height === ""
       )
-      .catch(err =>
-        this.setState({
-          message: err.statusText
+        return;
+      axios
+        .put(`http://localhost:3333/smurfs/${this.state.id}`, {
+          name: this.state.name,
+          age: this.state.age,
+          height: this.state.height
         })
-      );
+        .then(res => {
+          this.setState(
+            {
+              name: "",
+              age: "",
+              height: "",
+              message: res.statusText
+            },
+            () => {
+              this.props.getData(), this.props.history.push("/"); // Routes back to home
+            }
+          );
+        })
+        .catch(err => {
+          // this.setState({
+          //   message: err.statusText
+          // });
+          console.log(err);
+        });
+    } else {
+      if (
+        this.state.name === "" &&
+        this.state.age === "" &&
+        this.state.height === ""
+      )
+        return;
+      axios
+        .post("http://localhost:3333/smurfs", {
+          name: this.state.name,
+          age: this.state.age,
+          height: this.state.height
+        })
+        .then(res =>
+          this.setState(
+            {
+              name: "",
+              age: "",
+              height: "",
+              message: res.statusText
+            },
+            () => {
+              this.props.getData(); // Initiates call to server from App.js to update data on screen
+              this.props.history.push("/"); // Routes back to home
+            }
+          )
+        )
+        .catch(err =>
+          this.setState({
+            message: err.statusText
+          })
+        );
+    }
   };
 
   handleInputChange = e => {
@@ -76,8 +123,10 @@ class SmurfForm extends Component {
             name="height"
           />
           <div className="button__container">
-            <button className="btn" type="submit">
-              Add to the village
+            <button className="btn" type="submit" onClick={this.addSmurf}>
+              {localStorage.getItem("id")
+                ? "Modify smurf"
+                : "Add to the village"}
             </button>
             <button className="btn" type="button" onClick={this.clearForm}>
               Clear form
