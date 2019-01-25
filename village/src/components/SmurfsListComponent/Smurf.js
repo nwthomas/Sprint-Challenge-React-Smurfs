@@ -12,7 +12,7 @@ const Smurf = props => {
       <div className="smurf__buttons">
         <Link to="/smurf-form">
           <button
-            onClick={() => props.modifyFriend()}
+            onClick={() => props.modifySmurf(id)}
             className="btn modify"
             name="modify"
           >

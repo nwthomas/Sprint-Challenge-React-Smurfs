@@ -54,7 +54,7 @@ class App extends Component {
   };
 
   modifySmurf = id => {
-    // add content
+    localStorage.setItem("id", id);
   };
 
   componentDidMount() {
@@ -107,6 +107,7 @@ class App extends Component {
               {...props}
               smurfs={this.state.shownSmurfs}
               deleteSmurf={this.deleteSmurf}
+              modifySmurf={this.modifySmurf}
             />
           )}
         />
