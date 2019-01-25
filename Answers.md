@@ -21,3 +21,7 @@ Read - The `.get()` function pulls existing information from the server in `Axio
 Update - The `.put()` function ends new information in `Axios` to update existing information on the server.
 
 Delete - The `.delete()` function removes items from the server in `Axios`.
+
+- Mention three tools we can use to make AJAX requests
+
+The first tool is one of the CRUD methods I mention in the question above. These either create, read/retrieve, update, or delete information. The second tool is the `.then()` method that allows us to interpret the successful completion of our `Axios` interaction. Finally, the last tool is the `.catch()` method that will handle any errors that we might receive from the server for proglems with our interaction.
