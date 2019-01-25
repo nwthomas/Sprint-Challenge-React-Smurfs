@@ -7,3 +7,7 @@ In contrast, client-side routing allows for individual parts of the page to refr
 - What does HTTP stand for?
 
 Hyper-Test Transfer Protocol - It's the underlying protocol used by the World Wide Web.
+
+- What does CRUD stand for?
+
+CRUD, or "Create, Read, Update, Delete," is an application that is capable of creating data, reading it from a server, updating that data, and also deleting it. They are also the four basic functions of `persistent storage`.
